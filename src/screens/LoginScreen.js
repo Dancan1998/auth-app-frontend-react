@@ -1,24 +1,39 @@
 import React, { useState, useEffect } from "react";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
+import { useSelector, useDispatch } from "react-redux";
 import FormContainer from "../components/FormContainer";
 import { Form, Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { login } from "../actions/userActions";
 
 const LoginScreen = ({ location, history }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const dispatch = useDispatch();
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { error, loading, userInfo } = userLogin;
+
   const redirect = location.search ? location.search.split("=")[1] : "/";
+
+  useEffect(() => {
+    if (userInfo) {
+      history.push(redirect);
+    }
+  }, [history, userInfo, redirect]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log("login");
+    dispatch(login(email, password));
   };
 
   return (
     <FormContainer>
       <h1>Log In</h1>
+      {error && <Message variant="danger">{error}</Message>}
+      {loading && <Loader />}
       <Form onSubmit={submitHandler}>
         <Form.Group controlId="email">
           <Form.Label>Email Adress</Form.Label>
