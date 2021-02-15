@@ -62,10 +62,7 @@ const LoginScreen = ({ location, history }) => {
 
       <Row className="py-3">
         <Col>
-          <Link
-            className="btn btn-dark"
-            to={redirect ? `/register?redirect=${redirect}` : "/register"}
-          >
+          <Link className="btn btn-dark" to="/register">
             Register
           </Link>
         </Col>
@@ -75,3 +72,5 @@ const LoginScreen = ({ location, history }) => {
 };
 
 export default LoginScreen;
+
+//  to={redirect ? `/register?redirect=${redirect}` : "/register"}

@@ -35,23 +35,20 @@ export const userLoginReducer = (state = { userInfo: {} }, action) => {
   return state;
 };
 
-export const userRegisterReducer = (state = { user: {} }, action) => {
+export const userRegisterReducer = (state = { userInfo: {} }, action) => {
   if (action.payload === USER_REGISTER_REQUEST) {
     return {
-      ...state,
       loading: true,
     };
   }
   if (action.payload === USER_REGISTER_SUCCESS) {
     return {
-      ...state,
       loading: false,
-      user: action.payload,
+      userInfo: action.payload,
     };
   }
   if (action.payload === USER_REGISTER_FAIL) {
     return {
-      ...state,
       loading: false,
       error: action.payload,
     };

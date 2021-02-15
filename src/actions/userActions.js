@@ -40,7 +40,14 @@ export const logout = () => (dispatch) => {
   dispatch({ type: USER_LOGOUT });
 };
 
-export const register = (user_reg) => async (dispatch) => {
+export const register = (
+  first_name,
+  last_name,
+  email,
+  password,
+  county,
+  id_no
+) => async (dispatch) => {
   try {
     dispatch({ type: USER_REGISTER_REQUEST });
     const config = {
@@ -48,8 +55,14 @@ export const register = (user_reg) => async (dispatch) => {
         "Content-Type": "application/json",
       },
     };
-    const data = await http.post("/api/auth/register", { user_reg }, config);
+    const data = await http.post(
+      "/api/auth/register",
+      { first_name, last_name, email, password, county, id_no },
+      config
+    );
     dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
+    dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
+    localStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
     dispatch({
       type: USER_REGISTER_FAIL,

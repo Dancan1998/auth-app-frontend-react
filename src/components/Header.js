@@ -34,7 +34,7 @@ const Header = () => {
             </LinkContainer>
             {userInfo ? (
               <Nav.Link onClick={logoutHandler}>
-                <i class="fas fa-sign-out-alt"></i>Sign out
+                <i className="fas fa-sign-out-alt"></i>Sign out
               </Nav.Link>
             ) : (
               <LinkContainer to="/login">
