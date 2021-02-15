@@ -3,6 +3,9 @@ import {
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
   USER_LOGOUT,
+  USER_REGISTER_FAIL,
+  USER_REGISTER_REQUEST,
+  USER_REGISTER_SUCCESS,
 } from "../constants/userConstants";
 import http from "../http-common";
 
@@ -37,4 +40,23 @@ export const logout = () => (dispatch) => {
   dispatch({ type: USER_LOGOUT });
 };
 
-// `http://localhost:8000/api/auth/login
+export const register = (user_reg) => async (dispatch) => {
+  try {
+    dispatch({ type: USER_REGISTER_REQUEST });
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const data = await http.post("/api/auth/register", { user_reg }, config);
+    dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: USER_REGISTER_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
